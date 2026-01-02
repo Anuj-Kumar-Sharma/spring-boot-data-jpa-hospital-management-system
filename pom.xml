@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.codingshuttle.youtube</groupId>
-	<artifactId>hospitalManagement</artifactId>
+	<artifactId>hospitalManagementSystem</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>hospitalManagement</name>
 	<description>Hospital management system project for Spring Boot</description>
