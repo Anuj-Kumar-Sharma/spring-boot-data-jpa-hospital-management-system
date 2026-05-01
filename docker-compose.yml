@@ -1,0 +1,29 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: hospital-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: hospitalDB
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    image: hospital-app
+    container_name: hospital-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/hospitalDB
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+
+volumes:
+  postgres_data:
