@@ -1,9 +1,7 @@
 package com.codingshuttle.youtube.hospitalManagement.service;
 
-import com.codingshuttle.youtube.hospitalManagement.entity.LoginRequest;
-import com.codingshuttle.youtube.hospitalManagement.entity.LoginResponse;
-import com.codingshuttle.youtube.hospitalManagement.entity.SignUpResponse;
-import com.codingshuttle.youtube.hospitalManagement.entity.User;
+import com.codingshuttle.youtube.hospitalManagement.entity.*;
+import com.codingshuttle.youtube.hospitalManagement.entity.type.RoleType;
 import com.codingshuttle.youtube.hospitalManagement.repository.UserRepository;
 import com.codingshuttle.youtube.hospitalManagement.util.AuthUtil;
 import lombok.NonNull;
@@ -14,6 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +44,11 @@ public class AuthService {
     if(user !=null) throw new IllegalArgumentException("user already exists");
 
     user = userRepository.save(User.builder().username(loginRequest.username())
-            .password(passwordEncoder.encode(loginRequest.password())).build());
+            .password(passwordEncoder.encode(loginRequest.password()))
+            .roleTypes(Set.of(RoleType.PATIENT))
+            .build());
+
+    Patient patient = Patient.builder().name(user.getUsername()).build();
 
     return SignUpResponse.builder().username(user.getUsername()).id(user.getId()).build();
 
