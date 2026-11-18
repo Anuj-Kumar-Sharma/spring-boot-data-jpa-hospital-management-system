@@ -76,6 +76,7 @@ public class AuthService {
 
     // login controller
     public SignupResponseDto signup(SignUpRequestDto signupRequestDto) {
+        signupRequestDto.setRoles(java.util.Set.of(com.codingshuttle.youtube.hospitalManagement.entity.type.RoleType.PATIENT));
         User user = signUpInternal(signupRequestDto, AuthProviderType.EMAIL, null);
         return new SignupResponseDto(user.getId(), user.getUsername());
     }
